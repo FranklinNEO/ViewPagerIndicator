@@ -1,23 +1,71 @@
-#Android generated
-bin
-gen
+# Compiled source #
+###################
+*.class
 
-#Eclipse
-.project
-.classpath
-.settings
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.rar
+*.tar
+*.zip
 
-#IntelliJ IDEA
+# Logs and databases #
+######################
+*.log
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Editor Files #
+################
+*~
+*.swp
+
+# Gradle Files #
+################
+.gradle
+.gradletasknamecache
+.m2
+
+# Build output directies
+target/
+build/
+
+# IntelliJ specific files/directories
+out
 .idea
+*.ipr
+*.iws
 *.iml
-classes
+atlassian-ide-plugin.xml
 
-#Maven
-target
-release.properties
-pom.xml.*
-
-#Command line
+# AndroidStudio specific files/directories
 local.properties
-build.xml
-proguard-project.txt
+
+# Eclipse specific files/directories
+.classpath
+.project
+.settings
+.metadata
+bin/
+
+# NetBeans specific files/directories
+.nbattrs
+/.nb-gradle/profiles/private/
+.nb-gradle-properties
+
+# Android
+local.properties
+
+# jEnv
+.java-version
+
