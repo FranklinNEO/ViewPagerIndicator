@@ -44,7 +44,6 @@ import static android.widget.LinearLayout.VERTICAL;
  */
 public class CirclePageIndicator extends View implements PageIndicator {
   private static final int INVALID_POINTER = -1;
-  private static final String TAG = CirclePageIndicator.class.getSimpleName();
 
   private float mRadius;
   private float mStrokeRadius;
@@ -226,23 +225,20 @@ public class CirclePageIndicator extends View implements PageIndicator {
     if (mOrientation == HORIZONTAL) {
       longSize = getWidth();
       longPaddingBefore = getPaddingLeft();
-      longPaddingAfter = getPaddingRight();
       shortPaddingBefore = getPaddingTop();
     } else {
       longSize = getHeight();
       longPaddingBefore = getPaddingTop();
-      longPaddingAfter = getPaddingBottom();
       shortPaddingBefore = getPaddingLeft();
     }
 
     final float threeRadius = mRadius * 3;
     final float shortOffset = shortPaddingBefore + mRadius;
     float longOffset = longPaddingBefore + mRadius;
-    Log.d(TAG, "longOffset " + longOffset);
+
     if (mCentered) {
-      longOffset +=
-          ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * threeRadius)
-              / 2.0f);
+      longOffset = (longSize / 2.0f) - ((count * 2 * mRadius) + (count - 1) * mRadius)
+               / 2.0f + mRadius;
     }
 
     float dX;
@@ -263,7 +259,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         dX = shortOffset;
         dY = drawLong;
       }
-      Log.d(TAG, "dX = " + dX + " dY = " + dY + " pageFillRadius = " + pageFillRadius);
+
       // Only paint fill if not completely transparent
       if (mPaintPageFill.getAlpha() > 0) {
         canvas.drawCircle(dX, dY, pageFillRadius, mPaintPageFill);
@@ -506,7 +502,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
       result = specSize;
     } else {
       //Measure the height
-      result = (int) (2 * mRadius +  + getPaddingTop() + getPaddingBottom());
+      result = (int) (2 * mRadius + +getPaddingTop() + getPaddingBottom());
       //Respect AT_MOST value if that was what is called for by measureSpec
       if (specMode == MeasureSpec.AT_MOST) {
         result = Math.min(result, specSize);
