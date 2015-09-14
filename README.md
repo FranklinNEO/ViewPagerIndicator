@@ -1,3 +1,8 @@
+Original Repo: [JakeWharton ViewPagerIndicator][11]
+
+Changelog:
+09/13/15 - Fix CirclePageIndicator centering logic, stroke positioning, support for spacing between circles
+
 Android ViewPagerIndicator
 ==========================
 
@@ -23,13 +28,13 @@ Usage
         <com.viewpagerindicator.TitlePageIndicator
             android:id="@+id/titles"
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent" />
+            android:layout_width="match_parent" />
 
   2. In your `onCreate` method (or `onCreateView` for a fragment), bind the
      indicator to the `ViewPager`.
 
          //Set the pager with an adapter
-         ViewPager pager = (ViewPager)findViewById(R.id.pager);
+         ViewPager pager = (ViewPager) findViewById(R.id.pager);
          pager.setAdapter(new TestAdapter(getSupportFragmentManager()));
 
          //Bind the title indicator to the adapter
@@ -80,7 +85,7 @@ a dependency:
     </dependency>
 
 This project depends on the `ViewPager` class which is available in the
-[Android Support Library][2] or [ActionBarSherlock][3]. Details for
+[Android Support Library][2]. Details for
 including one of those libraries is available on their respecitve web sites.
 
 
@@ -89,6 +94,7 @@ including one of those libraries is available on their respecitve web sites.
 Developed By
 ============
 
+ * Erick Chang - <ekc.dev@gmail.com>
  * Jake Wharton - <jakewharton@gmail.com>
 
 
@@ -107,6 +113,7 @@ Credits
 License
 =======
 
+    Copyright 2015 Erick Chang
     Copyright 2012 Jake Wharton
     Copyright 2011 Patrik Åkerfeldt
     Copyright 2011 Francisco Figueiredo Jr.
@@ -138,3 +145,4 @@ License
  [8]: http://developer.android.com/guide/developing/projects/projects-eclipse.html#ReferencingLibraryProject
  [9]: https://raw.github.com/JakeWharton/Android-ViewPagerIndicator/master/sample/screens.png
  [10]: https://play.google.com/store/apps/details?id=com.viewpagerindicator.sample
+ [11]: https://github.com/JakeWharton/ViewPagerIndicator
