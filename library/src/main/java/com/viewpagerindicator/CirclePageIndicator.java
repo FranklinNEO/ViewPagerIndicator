@@ -29,7 +29,6 @@ import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -76,7 +75,9 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
   public CirclePageIndicator(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
-    if (isInEditMode()) return;
+    if (isInEditMode()) {
+      return;
+    }
 
     //Load defaults from resources
     final Resources res = getResources();
@@ -99,7 +100,10 @@ public class CirclePageIndicator extends View implements PageIndicator {
     mOrientation =
         a.getInt(R.styleable.CirclePageIndicator_android_orientation, defaultOrientation);
     mPaintPageFill.setStyle(Style.FILL);
-    mPaintPageFill.setColor(a.getColor(R.styleable.CirclePageIndicator_pageColor, defaultPageColor));
+    mPaintPageFill.setColor(a.getColor(
+        R.styleable.CirclePageIndicator_pageColor,
+        defaultPageColor
+    ));
     mPaintStroke.setStyle(Style.STROKE);
     mPaintStroke.setColor(
         a.getColor(R.styleable.CirclePageIndicator_strokeColor, defaultStrokeColor));
@@ -240,7 +244,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
     if (mCentered) {
       longOffset = (longSize / 2.0f) - ((count * 2 * mRadius) + (count - 1) * mSpacing)
-               / 2.0f + mRadius;
+          / 2.0f + mRadius;
     }
 
     float dX;
@@ -268,7 +272,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
       }
 
       // Only paint stroke if a stroke width was non-zero
-      if (pageFillRadius != mRadius) {
+      if (Math.abs(pageFillRadius - mRadius) > .0000001) {
         canvas.drawCircle(dX, dY, mStrokeRadius, mPaintStroke);
       }
     }
@@ -288,7 +292,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     canvas.drawCircle(dX, dY, mRadius, mPaintFill);
   }
 
-  public boolean onTouchEvent(android.view.MotionEvent ev) {
+  public boolean onTouchEvent(MotionEvent ev) {
     if (super.onTouchEvent(ev)) {
       return true;
     }
@@ -308,16 +312,14 @@ public class CirclePageIndicator extends View implements PageIndicator {
         final float x = MotionEventCompat.getX(ev, activePointerIndex);
         final float deltaX = x - mLastMotionX;
 
-        if (!mIsDragging) {
-          if (Math.abs(deltaX) > mTouchSlop) {
-            mIsDragging = true;
-          }
-        }
-
         if (mIsDragging) {
           mLastMotionX = x;
           if (mViewPager.isFakeDragging() || mViewPager.beginFakeDrag()) {
             mViewPager.fakeDragBy(deltaX);
+          }
+        } else {
+          if (Math.abs(deltaX) > mTouchSlop) {
+            mIsDragging = true;
           }
         }
 
@@ -347,7 +349,9 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         mIsDragging = false;
         mActivePointerId = INVALID_POINTER;
-        if (mViewPager.isFakeDragging()) mViewPager.endFakeDrag();
+        if (mViewPager.isFakeDragging()) {
+          mViewPager.endFakeDrag();
+        }
         break;
 
       case MotionEventCompat.ACTION_POINTER_DOWN: {
@@ -548,17 +552,18 @@ public class CirclePageIndicator extends View implements PageIndicator {
       dest.writeInt(currentPage);
     }
 
-    @SuppressWarnings("UnusedDeclaration") public static final Parcelable.Creator<SavedState>
-        CREATOR = new Parcelable.Creator<SavedState>() {
-      @Override
-      public SavedState createFromParcel(Parcel in) {
-        return new SavedState(in);
-      }
+    @SuppressWarnings("UnusedDeclaration")
+    public static final Parcelable.Creator<SavedState> CREATOR =
+        new Parcelable.Creator<SavedState>() {
+          @Override
+          public SavedState createFromParcel(Parcel in) {
+            return new SavedState(in);
+          }
 
-      @Override
-      public SavedState[] newArray(int size) {
-        return new SavedState[size];
-      }
-    };
+          @Override
+          public SavedState[] newArray(int size) {
+            return new SavedState[size];
+          }
+        };
   }
 }
